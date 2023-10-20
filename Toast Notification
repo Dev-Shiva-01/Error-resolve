@@ -1,0 +1,35 @@
+ public static void ShowPopup(string title, string popupMsg)
+        {
+            try
+            {
+               
+                var toastXml = ToastNotificationManager.GetTemplateContent(ToastTemplateType.ToastImageAndText01);
+
+                // Fill in the text elements
+                var stringElements = toastXml.GetElementsByTagName("text");
+                stringElements[0].AppendChild(toastXml.CreateTextNode(title));
+                stringElements[1].AppendChild(toastXml.CreateTextNode(popupMsg));
+
+                //var imageElements = toastXml.GetElementsByTagName("image");
+                //var toastImageSrc = new Uri("pack://application:,,,/Resource/icons/logo.ico"); // "ms-appx:///Resource/icons/logo.ico"; // replace this with the path to your image
+                //((Windows.Data.Xml.Dom.XmlElement)imageElements[0]).SetAttribute("src", toastImageSrc.ToString());
+                //((Windows.Data.Xml.Dom.XmlElement)imageElements[0]).SetAttribute("placement", "appLogoOverride");
+                //((Windows.Data.Xml.Dom.XmlElement)imageElements[0]).SetAttribute("alt", "9to6 Logo");
+                //((Windows.Data.Xml.Dom.XmlElement)imageElements[0]).SetAttribute("hint-crop", "circle");
+
+
+                // Create the toast and attach event listeners
+                var toast = new ToastNotification(toastXml);
+
+                //toast.Activated += (s, e) => { OpenPage(s, e, targetPage); };
+                //toast.Dismissed += ToastDismissed;
+                //toast.Failed += ToastFailed;
+
+                ToastNotificationManager.CreateToastNotifier("Capricorn Signer (Client)").Show(toast);
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message + ex.StackTrace);
+            }
+        }
